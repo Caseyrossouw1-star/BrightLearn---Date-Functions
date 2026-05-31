@@ -1,0 +1,366 @@
+{
+  "datasets": [
+    {
+      "name": "51faaa8b",
+      "displayName": "Customer Sales Summary by Date and Category",
+      "queryLines": [
+        "USE CATALOG `workspace`;\n",
+        "USE SCHEMA `default`;\n",
+        "\n",
+        "SELECT COUNT(DISTINCT `Customer ID`) AS unique_customers,\n",
+        "       Date,\n",
+        "       YEAR(Date) AS trans_year,\n",
+        "       MONTH(Date) AS trans_month,\n",
+        "       MONTHNAME(Date) AS trans_month_name,\n",
+        "       DAY(Date) AS trans_day,\n",
+        "       DAYNAME(Date) AS trans_day_name,\n",
+        "       SUM(`Total Amount`) AS revenue,\n",
+        "       `Product Category`\n",
+        "FROM `workspace`.`default`.`brightlearn_retail_sales_dataset`\n",
+        "GROUP BY ALL;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "2829c5c3",
+      "displayName": "Untitled Page",
+      "layout": [
+        {
+          "widget": {
+            "name": "2807e3e9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "51faaa8b",
+                  "fields": [
+                    {
+                      "name": "Product Category",
+                      "expression": "`Product Category`"
+                    },
+                    {
+                      "name": "trans_day_name",
+                      "expression": "`trans_day_name`"
+                    },
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "                                      Revenue Split By Category"
+              },
+              "mark": {
+                "layout": "group"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "trans_day_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Product Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "546b1435",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "51faaa8b",
+                  "fields": [
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    },
+                    {
+                      "name": "Product Category",
+                      "expression": "`Product Category`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "layout": "stack"
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "                            Revenue Distribution By Product Category"
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Product Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "cc0964a5",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "51faaa8b",
+                  "fields": [
+                    {
+                      "name": "Product Category",
+                      "expression": "`Product Category`"
+                    },
+                    {
+                      "name": "trans_day",
+                      "expression": "`trans_day`"
+                    },
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "                                          Revenue By Day Of Month"
+              },
+              "mark": {
+                "layout": "layer"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "trans_day",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Product Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "2eb318b0",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "51faaa8b",
+                  "fields": [
+                    {
+                      "name": "monthly(Date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `Date`)"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Visualization 3",
+                "showTitle": true,
+                "showDescription": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(Date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 8,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "258eee8d",
+            "multilineTextboxSpec": {
+              "lines": [
+                "# Revenue Analysis"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "35fe4738",
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-date-picker",
+              "encodings": {
+                "fields": []
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 7,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "587bc5f5",
+            "queries": [
+              {
+                "name": "dashboards/01f15d1c4619165ebd1fd59bb8292cba/datasets/59237f017734495880a354cfbcd2a12c_trans_month",
+                "query": {
+                  "datasetName": "51faaa8b",
+                  "fields": [
+                    {
+                      "name": "trans_month",
+                      "expression": "`trans_month`"
+                    },
+                    {
+                      "name": "trans_month_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "trans_month",
+                    "queryName": "dashboards/01f15d1c4619165ebd1fd59bb8292cba/datasets/59237f017734495880a354cfbcd2a12c_trans_month"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 1,
+            "width": 7,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
